@@ -34,8 +34,11 @@ const withSpinner = ( command ) => ( ...args ) => {
 			);
 		},
 		( error ) => {
-			const errorMessage = error.message || error.err || error.out;
-			spinner.fail( errorMessage );
+			spinner.fail( error.message || error.err );
+			if ( error.out ) {
+				// eslint-disable-next-line no-console
+				console.error( `\n\n${ error.out }\n\n` );
+			}
 			process.exit( error.exitCode || 1 );
 		}
 	);
