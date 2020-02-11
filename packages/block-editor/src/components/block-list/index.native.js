@@ -153,16 +153,17 @@ export class BlockList extends Component {
 			isReadOnly,
 			shouldShowInsertionPointBefore,
 			shouldShowInsertionPointAfter,
-			getBlockContainerStyle,
+			flatListProps,
 		} = this.props;
 
 		return (
 			<ReadableContentView
-				style={
-					getBlockContainerStyle && getBlockContainerStyle( clientId )
-				}
+				style={ flatListProps && { alignItems: 'stretch' } }
 			>
-				<View pointerEvents={ isReadOnly ? 'box-only' : 'auto' }>
+				<View
+					style={ flatListProps && { flex: 1 } }
+					pointerEvents={ isReadOnly ? 'box-only' : 'auto' }
+				>
 					{ shouldShowInsertionPointBefore( clientId ) && (
 						<BlockInsertionPoint />
 					) }

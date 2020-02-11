@@ -162,3 +162,15 @@
 	margin-left: -$block-edge-to-content;
 	margin-right: -$block-edge-to-content;
 }
+
+.is-vertically-aligned-top {
+	justify-content: flex-start;
+}
+
+.is-vertically-aligned-center {
+	justify-content: center;
+}
+
+.is-vertically-aligned-bottom {
+	justify-content: flex-end;
+}

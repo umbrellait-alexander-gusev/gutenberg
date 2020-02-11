@@ -208,6 +208,7 @@ class BlockListBlock extends Component {
 			showFloatingToolbar,
 			parentId,
 			isTouchable,
+			verticalAlingmentStyle,
 		} = this.props;
 
 		const accessibilityLabel = getAccessibleBlockLabel(
@@ -241,7 +242,10 @@ class BlockListBlock extends Component {
 					<View
 						pointerEvents={ isTouchable ? 'auto' : 'box-only' }
 						accessibilityLabel={ accessibilityLabel }
-						style={ this.applyBlockStyle() }
+						style={ [
+							this.applyBlockStyle(),
+							verticalAlingmentStyle,
+						] }
 					>
 						{ isValid ? (
 							this.getBlockForType()
@@ -346,6 +350,21 @@ export default compose( [
 		const isRootListInnerBlockHolder =
 			! isSelectedBlockNested && isInnerBlockHolder;
 
+		const getVerticalAlignmentRemap = ( alignment ) => {
+			if ( ! alignment ) return;
+			return styles[ `is-vertically-aligned-${ alignment }` ];
+		};
+
+		const verticalAlingmentStyle =
+			name === 'core/column'
+				? {
+						flex: 1,
+						...getVerticalAlignmentRemap(
+							attributes.verticalAlignment
+						),
+				  }
+				: {};
+
 		return {
 			icon,
 			name: name || 'core/missing',
@@ -367,6 +386,7 @@ export default compose( [
 			isDimmed,
 			isRootListInnerBlockHolder,
 			isUnregisteredBlock,
+			verticalAlingmentStyle,
 		};
 	} ),
 	withDispatch( ( dispatch, ownProps, { select } ) => {
