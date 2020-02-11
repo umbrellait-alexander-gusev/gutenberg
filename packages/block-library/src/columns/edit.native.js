@@ -84,7 +84,7 @@ function ColumnsEditContainer( {
 			return 1;
 		}
 		if ( containerWidth >= 480 && containerWidth < 768 ) {
-			return 2;
+			return Math.min( columnCount, 2 );
 		}
 		return columnsNumber;
 	};

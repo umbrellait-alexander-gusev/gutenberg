@@ -52,6 +52,18 @@ class BlockListBlock extends Component {
 		}
 	}
 
+	renderBlockEdit() {
+		const { name, verticalAlingmentStyle } = this.props;
+
+		return name === 'core/column' ? (
+			<View style={ verticalAlingmentStyle }>
+				{ this.getBlockForType() }
+			</View>
+		) : (
+			this.getBlockForType()
+		);
+	}
+
 	getBlockForType() {
 		return (
 			<BlockEdit
@@ -208,7 +220,6 @@ class BlockListBlock extends Component {
 			showFloatingToolbar,
 			parentId,
 			isTouchable,
-			verticalAlingmentStyle,
 		} = this.props;
 
 		const accessibilityLabel = getAccessibleBlockLabel(
@@ -244,20 +255,30 @@ class BlockListBlock extends Component {
 						accessibilityLabel={ accessibilityLabel }
 						style={ [
 							this.applyBlockStyle(),
-							verticalAlingmentStyle,
+							this.props.name === 'core/column' && { flex: 1 },
 						] }
 					>
 						{ isValid ? (
-							this.getBlockForType()
+							this.renderBlockEdit()
 						) : (
 							<BlockInvalidWarning
 								blockTitle={ title }
 								icon={ icon }
 							/>
 						) }
-						<View style={ this.applyToolbarStyle() }>
+						<View
+							style={ {
+								...this.applyToolbarStyle(),
+								justifyContent: 'flex-end',
+							} }
+						>
 							{ isSelected && (
-								<BlockMobileToolbar clientId={ clientId } />
+								<BlockMobileToolbar
+									clientId={ clientId }
+									hideDelete={
+										this.props.name === 'core/column'
+									}
+								/>
 							) }
 						</View>
 					</View>
